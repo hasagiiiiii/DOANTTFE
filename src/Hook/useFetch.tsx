@@ -80,7 +80,7 @@ export const fetchFormData = async (
     };
 
     if (data && method !== 'GET') {
-      options.body = JSON.stringify(data);
+      options.body = data;
     }
 
     const response = await fetch(url, options);

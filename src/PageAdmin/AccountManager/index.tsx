@@ -86,7 +86,7 @@ const AccountManager = () => {
   const listStudent = useSelector(getAcount);
 
   React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}getStudent`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getStudent`, 'POST', {
       page: 1,
       limit: 10,
     }).then((data) =>
@@ -101,7 +101,7 @@ const AccountManager = () => {
   const handleChangeSize = (pageSize: number) => {
     console.log(pageSize);
     setPaging((pre) => ({ ...pre, limit: pageSize }));
-    fetchData(`${process.env.REACT_APP_URL_API}getStudent`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getStudent`, 'POST', {
       page: paging.page,
       limit: pageSize,
     }).then((data) =>
@@ -112,7 +112,7 @@ const AccountManager = () => {
   const handleChangePage = (pageNumber: number) => {
     console.log(pageNumber);
     setPaging((pre) => ({ ...pre, page: pageNumber }));
-    fetchData(`${process.env.REACT_APP_URL_API}getStudent`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getStudent`, 'POST', {
       page: pageNumber,
       limit: paging.limit,
     }).then((data) =>

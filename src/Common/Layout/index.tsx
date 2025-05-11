@@ -66,7 +66,7 @@ const LayoutCommon: React.FC = () => {
     //   setProFile(data.data)
     // );
     axios
-      .get(`${process.env.REACT_APP_URL_API}profile`, {
+      .get(`${process.env.REACT_APP_URL_API_USER}profile`, {
         withCredentials: true,
       })
       .then((data) => {
@@ -334,7 +334,7 @@ const LayoutCommon: React.FC = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           ) : undefined}
-          {user?.role === 'student' ? (
+          {user?.role === 'student' || !user ? (
             <Routes>
               <Route path="About" element={<About />} />
               <Route path="Teachers" element={<Teacher />} />

@@ -18,8 +18,8 @@ const AppContext: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [spin, setSpin] = React.useState(false);
   const navigate = useNavigate();
   const Logout = async (): Promise<void> => {
-    navigate('/');
     await LogoutService();
+    navigate('/');
     window.location.reload();
     document.cookie.split(';').forEach((cookie) => {
       const [name] = cookie.split('=');

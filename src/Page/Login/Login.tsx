@@ -21,6 +21,7 @@ const Login: React.FC<{
     setSpin(true);
     setTimeout(() => {
       setSpin(false);
+      window.location.reload();
     }, 1000);
     setLogin(true);
     onSucces();

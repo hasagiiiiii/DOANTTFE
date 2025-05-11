@@ -17,7 +17,14 @@ export default createSlice({
             state.listAcount.push(action.payload)
         },
         updateAccount: (state, action: PayloadAction<AcountModel>) => {
-            state.listAcount.map((item) => item.id === action.payload.id ? action.payload : item)
+            if (action.payload.role !== 'teacher') {
+                state.listAcount = state.listAcount.filter(acc => {
+                    console.log(acc.id === action.payload.id)
+                    return acc.id !== action.payload.id
+                })
+            } else {
+                state.listAcount.map((item) => item.id === action.payload.id ? action.payload : item)
+            }
         },
         deleteAccount: (state, action: PayloadAction<number>) => {
             state.listAcount.filter(item => item.id !== action.payload)

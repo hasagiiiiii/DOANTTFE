@@ -8,6 +8,8 @@ import { fetchData } from '../../Hook/useFetch';
 import PagingCommon from '../../Common/Component/Paging/paging';
 import TeacherManagerStoreReducer from './store/TeacherManager.store.reducer';
 import { AcountModel } from '../../Model/root.model';
+import ModalCommon from '../../Common/Component/Modal/Modal.component';
+import UpdateAccount from '../UpdateAccount';
 
 const TeacherManager = () => {
   const columns = [
@@ -81,15 +83,15 @@ const TeacherManager = () => {
     limit: 10,
     total: 100,
   });
-  const listStudent = useSelector(getAcount);
+  const listTeacher = useSelector(getAcount);
 
   React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}getTeacher`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getTeacher`, 'POST', {
       page: 1,
       limit: 10,
     }).then((data) =>
       dispatch(
-        TeacherManagerStoreReducer.actions.setAllUser(data.data.students)
+        TeacherManagerStoreReducer.actions.setAllUser(data.data.teachers)
       )
     );
     hanldeSetLoading();
@@ -101,12 +103,12 @@ const TeacherManager = () => {
   const handleChangeSize = (pageSize: number) => {
     console.log(pageSize);
     setPaging((pre) => ({ ...pre, limit: pageSize }));
-    fetchData(`${process.env.REACT_APP_URL_API}getStudent`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getStudent`, 'POST', {
       page: paging.page,
       limit: pageSize,
     }).then((data) =>
       dispatch(
-        TeacherManagerStoreReducer.actions.setAllUser(data.data.students)
+        TeacherManagerStoreReducer.actions.setAllUser(data.data.teachers)
       )
     );
     hanldeSetLoading();
@@ -114,18 +116,28 @@ const TeacherManager = () => {
   const handleChangePage = (pageNumber: number) => {
     console.log(pageNumber);
     setPaging((pre) => ({ ...pre, page: pageNumber }));
-    fetchData(`${process.env.REACT_APP_URL_API}getStudent`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}getStudent`, 'POST', {
       page: pageNumber,
       limit: paging.limit,
     }).then((data) =>
       dispatch(
-        TeacherManagerStoreReducer.actions.setAllUser(data.data.students)
+        TeacherManagerStoreReducer.actions.setAllUser(data.data.teachers)
       )
     );
     hanldeSetLoading();
   };
   const handleDbClick = async (record: AcountModel) => {
     console.log(record);
+    const account = ModalCommon.Show({
+      title: <h1>Update Account</h1>,
+      content: (
+        <UpdateAccount
+          account={record}
+          dispatch={dispatch}
+          onSucces={() => account.destroy()}
+        />
+      ),
+    });
   };
   return (
     <div>
@@ -140,7 +152,7 @@ const TeacherManager = () => {
         onDBClick={handleDbClick}
         rowKey="id"
         columns={columns}
-        dataSource={listStudent}
+        dataSource={listTeacher}
         loading={loading}
       />
     </div>

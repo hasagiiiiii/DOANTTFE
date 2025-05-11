@@ -89,7 +89,6 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
       });
     }
   }, [peer, socket]);
-  console.log(VideoRef.current);
   const connectToNewUser = (
     userId: string,
     stream: MediaStream,
@@ -171,6 +170,9 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
                 VideoRef.current[call.peer] = userVideoStream; // Store the peer's stream
               }
             });
+          });
+          peer.on('error', (err) => {
+            console.error('Peer error:', err);
           });
         });
     } catch (error) {
@@ -280,7 +282,8 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
 
   const hanldetoggleMic = (
     setToggleMic: React.Dispatch<React.SetStateAction<boolean>>,
-    toggleMic: boolean
+    toggleMic: boolean,
+    roomId: number
   ) => {
     if (myStream) {
       setToggleMic(!toggleMic);
@@ -288,7 +291,7 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
       const audioTrack = myStream.getAudioTracks()[0];
       audioTrack.enabled = !audioTrack.enabled;
       if (socket) {
-        // socket.emit('toggleMic', myPeerID, roomId, audioTrack.enabled);
+        socket.emit('toggleMic', myPeerID, roomId, audioTrack.enabled);
       }
     }
   };
