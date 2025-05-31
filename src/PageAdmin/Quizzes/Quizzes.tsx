@@ -6,9 +6,11 @@ import QuizzesStoreReducer, {
 } from './store/Quizzes.store.reducer';
 import { fetchData } from '../../Hook/useFetch';
 import { Dispatch } from '@reduxjs/toolkit';
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction, NavigateOptions } from 'react-router-dom';
 import ModalCommon from '../../Common/Component/Modal/Modal.component';
 import UpdateQuizzes from '../UpdateQuizzes/UpdateQuizzes';
+import AddQuizzes from '../AddQuizzes/AddQuizzes';
+import { ModalessCustom } from '../../Common/ModalessCustom/ModalessCustom';
 
 const Quizzes: React.FC<{
   idCourse: number;
@@ -21,13 +23,29 @@ const Quizzes: React.FC<{
     hanldeGetQuizze();
   }, []);
   const hanldeGetQuizze = () => [
-    fetchData(`${process.env.REACT_APP_URL_API}quizzes`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_QUIZZES}quizzes`, 'POST', {
       idCourse,
     }).then((data) =>
       // dispatch(QuizzesStoreReducer.actions.getAllQuizzes(data.data))
       setQuizzesList(data.data)
     ),
   ];
+  const handleAddQuizzes = () => {
+    const addPlayList = ModalCommon.Show({
+      title: <h1>Add Lesson</h1>,
+      content: (
+        <AddQuizzes
+          onSucces={() => addPlayList.destroy()}
+          idCourse={idCourse}
+          dispatch={dispatch}
+        />
+      ),
+      afterClose: () => {
+        hanldeGetQuizze();
+      },
+      width: 600,
+    });
+  };
   const hanldeUpdateQuizze = (record: QuizzesItem) => {
     const update = ModalCommon.Show({
       title: <h1>Update Quizzes</h1>,
@@ -44,11 +62,20 @@ const Quizzes: React.FC<{
       },
     });
   };
+
   const hanldeDoubleClick = (record: QuizzesItem, index: number) => {
-    console.log(record);
-    onDestroy();
-    document.cookie = `idQuizze=${record.id};path=/`;
-    navigate(`Quizzes`);
+    if (record.title === 'Bài Tập Về Nhà') {
+      document.cookie = `idQuizze=${record.id};path=/`;
+      ModalessCustom('/vsCode', 'vsCode', record.description);
+      onDestroy();
+    } else {
+      onDestroy();
+      document.cookie = `idQuizze=${record.id};path=/`;
+      navigate(`Quizzes`);
+    }
+  };
+  const hanldeDelete = async (record: QuizzesItem) => {
+    fetchData('');
   };
   const columns = [
     // {
@@ -98,12 +125,15 @@ const Quizzes: React.FC<{
     },
   ];
   return (
-    <TableCommon
-      height={400}
-      onDBClick={hanldeDoubleClick}
-      dataSource={quizzesList}
-      columns={columns}
-    />
+    <div>
+      <Button onClick={handleAddQuizzes}>AddQuizz</Button>
+      <TableCommon
+        height={400}
+        onDBClick={hanldeDoubleClick}
+        dataSource={quizzesList}
+        columns={columns}
+      />
+    </div>
   );
 };
 

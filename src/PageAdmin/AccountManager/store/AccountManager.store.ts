@@ -29,7 +29,7 @@ export default createSlice({
             }
         },
         deleteAccount: (state, action: PayloadAction<number>) => {
-            state.listAcount.filter(item => item.id !== action.payload)
+            state.listAcount = state.listAcount.filter(item => item.id !== action.payload)
         }
     }
 })

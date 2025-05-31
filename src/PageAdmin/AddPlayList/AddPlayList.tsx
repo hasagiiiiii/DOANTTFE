@@ -14,6 +14,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
 import PlaylistAdminStoreReducer from '../PlayListCourse/store/PlaylistAdmin.store.reducer';
+import { Result } from '../../Model/root.model';
 
 const AddPlayList: React.FC<{
   idCourse: number;
@@ -33,6 +34,7 @@ const AddPlayList: React.FC<{
     formData.append('course_id', idCourse.toString());
     formData.append('title', value.title);
     formData.append('content', value.content);
+    formData.append('order_index', value.order_index);
     if (file && fileBanner) {
       formData.append('video_url', file);
       formData.append('banner', fileBanner);
@@ -41,14 +43,20 @@ const AddPlayList: React.FC<{
       return;
     }
     axios
-      .post(`http://localhost:3001/course/lesson`, formData, {
+      .post(`${process.env.REACT_APP_URL_API_LESSON}/lesson`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       })
       .then((res) => {
-        if (res.data.result == 0) {
-          dispatch(PlaylistAdminStoreReducer.actions.insert(res.data.data));
+        if (res.data.result == Result.RESULT_SUCCESS) {
+          dispatch(
+            PlaylistAdminStoreReducer.actions.setPlayList(res.data.data)
+          );
+          message.success('Thành công');
           onSucces();
+        }
+        if (res.data.result == Result.RESULT_FALURE) {
+          message.error('Thất bại');
         }
       })
       .catch((err) => {
@@ -118,21 +126,31 @@ const AddPlayList: React.FC<{
   };
   return (
     <Form form={form} onFinish={onFinsh} onFinishFailed={onFinishFailed}>
-      <Typography.Text>Title</Typography.Text>
+      <Typography.Text>
+        Title <span style={{ color: 'red' }}>*</span>
+      </Typography.Text>
       <Form.Item<LessonItem>
         name="title"
         rules={[{ required: true, message: 'Please input title!' }]}
       >
         <Input />
       </Form.Item>
-      <Typography.Text>Description</Typography.Text>
+      <Typography.Text>
+        Description <span style={{ color: 'red' }}>*</span>
+      </Typography.Text>
       <Form.Item<LessonItem>
         name="content"
         rules={[{ required: true, message: 'Please input Description!' }]}
       >
         <Input.TextArea />
       </Form.Item>
-      <Typography.Text>Video</Typography.Text>
+      <Typography.Text>Order Index</Typography.Text>
+      <Form.Item<LessonItem> name="order_index">
+        <Input type="number" />
+      </Form.Item>
+      <Typography.Text>
+        Video <span style={{ color: 'red' }}>*</span>
+      </Typography.Text>
       <Form.Item<LessonItem>
         name="video_url"
         rules={[{ required: true, message: 'Please input Description!' }]}
@@ -150,7 +168,9 @@ const AddPlayList: React.FC<{
           </Button>
         </Upload>
       </Form.Item>
-      <Typography.Text>Banner</Typography.Text>
+      <Typography.Text>
+        Banner <span style={{ color: 'red' }}>*</span>
+      </Typography.Text>
       <Form.Item<LessonItem>
         name="banner"
         rules={[{ required: true, message: 'Please choose Banner!' }]}

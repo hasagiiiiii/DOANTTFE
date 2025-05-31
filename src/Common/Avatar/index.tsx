@@ -23,7 +23,6 @@ const Avatar: React.FC<AvatarProps> = React.memo(
     const videoRef = React.useRef<ExtendedHTMLVideoElement>(null);
     const activeRef = React.useRef<boolean>(true);
 
-    console.log(stream);
     React.useEffect(() => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -36,14 +35,10 @@ const Avatar: React.FC<AvatarProps> = React.memo(
 
     React.useEffect(() => {
       if (socket) {
-        socket.on('connect', () => {
-          console.log('connect to new ');
-        });
+        socket.on('connect', () => {});
         socket.on('toggleCamera', (idUser: string, isActiveCamera: boolean) => {
           activeRef.current = isActiveCamera;
-          console.log(videoRef.current);
           if (userId === idUser) {
-            console.log(isActiveCamera);
             if (videoRef.current) {
               videoRef.current.isActiveCamera = isActiveCamera;
               const videoFullScreen = document.querySelector(

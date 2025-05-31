@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700&display=swap');
+
 :root {
   list-style: none;
+  --main-color: #8e44ad;
+  --red: #e74c3c;
+  --orange: #f39c12;
+  --light-color: #888;
+  --light-bg: #eee;
+  --black: #2c3e50;
+  --white: #fff;
+  --border: .1rem solid rgba(0, 0, 0, .2);
 }
 
 body {
@@ -38,4 +48,30 @@ body.dark {
   outline: none;
   border: none;
   text-decoration: none;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--main-color);
+}
+
+.ant-tabs-tab-btn:hover {
+  color: var(--main-color);
+
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-tabs .ant-tabs-ink-bar {
+  background-color: var(--main-color);
+  z-index: 9999;
+}
+
+:where(.css-dev-only-do-not-override-19lec04).ant-tabs-top>.ant-tabs-nav {
+  margin: 0 0 -2px 0 !important;
+}
+
+.ant-tabs-tab {
+  background-color: #ffffff6e !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active {
+  background-color: #ffffff !important;
 }

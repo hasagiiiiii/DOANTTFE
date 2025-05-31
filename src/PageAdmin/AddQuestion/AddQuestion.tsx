@@ -10,6 +10,7 @@ import React from 'react';
 import './index.css';
 import { fetchData } from '../../Hook/useFetch';
 import getCookie from '../../Common/Function/Cookie';
+import NotificationService from '../../Common/Component/Notification/Notification';
 export interface Question {
   text: string;
 }
@@ -43,19 +44,34 @@ const AddQuestion: React.FC<{ onSucces: Function }> = ({ onSucces }) => {
   const [formValue, setFormValue] = React.useState(initialFormValue);
   const idQuizz = getCookie('idQuizze');
   const onFinish = () => {
-    let datares = {
-      quiz_id: idQuizz,
-      text: formValue.text,
-      type: 'multiple_choice',
-      answer: formValue.answer,
-    };
-    fetchData(`${process.env.REACT_APP_URL_API}questionByID`, 'POST', {
-      datares,
-    }).then((data) => {
-      if (data.result === 0) {
-        onSucces();
-      }
+    let check = false;
+    formValue.answer.map((item, index) => {
+      if (item.is_correct === true) check = true;
     });
+    if (check) {
+      let datares = {
+        quiz_id: idQuizz,
+        text: formValue.text,
+        type: 'multiple_choice',
+        answer: formValue.answer,
+      };
+      fetchData(
+        `${process.env.REACT_APP_URL_API_QUESTION}questionByID`,
+        'POST',
+        {
+          datares,
+        }
+      ).then((data) => {
+        if (data.result === 0) {
+          onSucces();
+        }
+      });
+    } else {
+      NotificationService.error(
+        'Chưa chọn đáp án đúng',
+        'Hãy chọn 1 đáp án đúng'
+      );
+    }
   };
   const onChangeInput = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({

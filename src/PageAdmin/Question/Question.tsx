@@ -44,7 +44,7 @@ const Question = () => {
     hanmdleCallQuestion();
   }, []);
   const hanmdleCallQuestion = () => {
-    fetchData(`${process.env.REACT_APP_URL_API}getQuestion`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_QUESTION}getQuestion`, 'POST', {
       id_quizze,
     }).then((data) =>
       dispatch(QuestionAdminStoreReducer.actions.setQuestion(data.data))

@@ -1,15 +1,17 @@
 .playlist-details {
     position: relative;
+    width: 75rem;
 }
 
 .playlist-details .video {
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 8%;
+    width: 8% !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 !important;
 }
 
 .playlist-details .quizzes {
@@ -29,10 +31,16 @@
     flex-wrap: wrap;
     background-color: var(--white);
     padding: 2rem;
+    border-radius: 10px;
+
 }
 
-.playlist-details .row .column {
-    flex: 0 0 40rem;
+.playlist-details .row .column:first-child {
+    flex: 0 0 34rem;
+}
+
+.playlist-details .row .column:last-child {
+    flex: 0 0 34rem;
 }
 
 .playlist-details .row .column .save-playlist {
@@ -130,10 +138,36 @@
 }
 
 .playlist-videos .box-container {
-    display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); */
+    /* display: flex; */
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     flex: 0 0 20rem;
     gap: 1.5rem;
     justify-content: start;
     align-items: flex-start;
+}
+
+.list-account {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.addUser {
+    background-color: #e9e7e7;
+    border-radius: 50%;
+    padding: 12px 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addUser:active {
+    transform: scale(0.8);
+}
+
+.line {
+    border-bottom: 2px solid rgba(128, 128, 128, 0.541);
+    align-items: end;
+    margin-bottom: 10px;
 }

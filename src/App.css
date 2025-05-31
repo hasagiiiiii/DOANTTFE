@@ -43,6 +43,11 @@ body {
     background-color: var(--main-color);
 }
 
+.ant-modal-title {
+    background-color: var(--main-color);
+    padding: 20px 40px;
+}
+
 /* .anticon.anticon-check-circle {
     flex: none;
     font-size: 22px;

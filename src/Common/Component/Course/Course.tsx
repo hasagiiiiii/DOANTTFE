@@ -25,7 +25,7 @@ const Course: React.FC<{ course: CourseItem }> = ({ course }) => {
   const navigate = useNavigate();
   const hanldeJoinCourse = () => {
     let idCourse = course.id;
-    fetchData(`${process.env.REACT_APP_URL_API}joinCourse`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_ENROLLMENT}joinCourse`, 'POST', {
       idCourse,
     }).then((data) => {
       if (data.result === 0) {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface PlayListItem {
+export interface PlayListItem {
     id: number;
     title: string;
     content: string;
@@ -27,9 +27,13 @@ export default createSlice({
             state.playList.push(action.payload)
         },
         upatePlayList(state, action: PayloadAction<PlayListItem>) {
-            state.playList.map(item => {
+
+            state.playList = state.playList.map(item => {
                 return item.id === action.payload.id ? action.payload : item
             })
+        },
+        deletePlayList(state, action: PayloadAction<number>) {
+            state.playList = state.playList.filter(item => item.id !== action.payload)
         }
 
     }

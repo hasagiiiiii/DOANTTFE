@@ -21,7 +21,7 @@ const UpdateQuizzes: React.FC<{
     const value = form.getFieldsValue();
     let id = values.id;
     const data = { ...value, id };
-    fetchData(`${process.env.REACT_APP_URL_API}updateQuize`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_QUIZZES}updateQuize`, 'POST', {
       data,
     }).then((data) => {
       if (data.result == 0) {

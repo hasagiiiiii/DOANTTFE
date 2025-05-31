@@ -20,11 +20,12 @@ const AppContext: React.FC<{ children: ReactNode }> = ({ children }) => {
   const Logout = async (): Promise<void> => {
     await LogoutService();
     navigate('/');
-    window.location.reload();
     document.cookie.split(';').forEach((cookie) => {
       const [name] = cookie.split('=');
       document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
     });
+    localStorage.clear();
+    window.location.reload();
   };
   React.useEffect(() => {
     setSpin(true);

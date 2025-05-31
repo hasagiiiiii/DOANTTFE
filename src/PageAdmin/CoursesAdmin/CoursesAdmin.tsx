@@ -103,7 +103,7 @@ const CoursesAdmin = () => {
   };
   React.useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_URL_API}coursebyIDUser`, {
+      .get(`${process.env.REACT_APP_URL_API_COURSES}coursebyIDUser`, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       })

@@ -1,17 +1,15 @@
 import { Alert, Button, Col, Flex, Row } from 'antd';
 import React from 'react';
 import Course, { CourseItem } from '../../Common/Component/Course/Course';
-import ModalCommon from '../../Common/Component/Modal/Modal.component';
-import AddCourse from '../../PageAdmin/AddCourse/AddCourse';
-import axios from 'axios';
 import { fetchData } from '../../Hook/useFetch';
 const Courses = () => {
   const [courses, setCourses] = React.useState<CourseItem[]>([]);
 
   React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}course`).then((data) =>
-      setCourses(data.data)
-    );
+    fetchData(
+      `${process.env.REACT_APP_URL_API_COURSES}getCoursebyStudent`,
+      'POST'
+    ).then((data) => setCourses(data.data));
   }, []);
   console.log(courses);
   return (

@@ -5,6 +5,7 @@ import { fetchData } from '../../Hook/useFetch';
 import './index.css';
 import ModalCommon from '../../Common/Component/Modal/Modal.component';
 import { useNavigate } from 'react-router-dom';
+import CountdownTimer from '../../Common/Component/Calendar';
 const initialFormValue: QuestionItem[] = [
   {
     question_text: '',
@@ -44,6 +45,7 @@ const QuestionStudent = () => {
   const id_quizze = getCookie('idQuizze');
   const [question, setQuestion] =
     React.useState<QuestionItem[]>(initialFormValue);
+  const [disable, setDisable] = React.useState(false);
   const [answers, setAnswer] = React.useState<Payload>({
     quiz_id: id_quizze,
     answers: [],
@@ -52,7 +54,7 @@ const QuestionStudent = () => {
     hanmdleCallQuestion();
   }, []);
   const hanmdleCallQuestion = () => {
-    fetchData(`${process.env.REACT_APP_URL_API}getQuestion`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_QUESTION}getQuestion`, 'POST', {
       id_quizze,
     }).then((data) => setQuestion(data.data));
   };
@@ -79,22 +81,31 @@ const QuestionStudent = () => {
     });
   };
   const hanldeSubmit = () => {
-    fetchData(`${process.env.REACT_APP_URL_API}submit-quiz`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_ANSWER}submit-quiz`, 'POST', {
       answers,
     }).then((data) => {
       if (data.result === 0) {
-        ModalCommon.showSucce({
+        ModalCommon.Show({
           title: <h1> Hoàn thành bài kiểm tra</h1>,
           content: <h1>Số điểm {data.data}</h1>,
           width: 480,
-          afterClose: () => [window.history.back()],
+          afterClose: () => {
+            console.log('vao day');
+            window.history.back();
+          },
         });
       }
     });
   };
   return (
-    <div className="flex" style={{ gap: 20 }}>
-      <div className="flex" style={{ gap: 10 }}>
+    <div
+      style={{ position: 'relative', justifyContent: 'center' }}
+      className="flex"
+    >
+      <div
+        className="flex"
+        style={{ gap: 10, justifyContent: 'center', flexDirection: 'column' }}
+      >
         {question.map((item, index) => {
           return (
             <Card key={index} className="question">
@@ -103,6 +114,7 @@ const QuestionStudent = () => {
                 {item.answer.map((as, index) => {
                   return (
                     <Radio
+                      style={{ display: 'block' }}
                       value={as.id}
                       onChange={(e) => onChecked(item.id, e)}
                       key={index}
@@ -116,9 +128,14 @@ const QuestionStudent = () => {
           );
         })}
       </div>
-      <Card style={{ width: '20%' }}>
+      <Card style={{ width: '20%', position: 'absolute', top: 0, right: 0 }}>
         <h1>Time</h1>
-        <Button onClick={() => hanldeSubmit()} className="btn">
+        <CountdownTimer setDisable={setDisable} minutes={1} />
+        <Button
+          disabled={disable}
+          onClick={() => hanldeSubmit()}
+          className="btn"
+        >
           Nộp bài
         </Button>
       </Card>

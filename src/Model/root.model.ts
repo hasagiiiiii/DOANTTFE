@@ -8,7 +8,10 @@ export enum Result {
     RESULT_SUCCESS,
     RESULT_ERROR,
     RESULT_FALURE = -1,
-    RESULT_AUTH = -2
+    RESULT_AUTH = -2,
+    RESULT_NOTFOUND = -3,
+    RESULT_PASSWORD = -4,
+
 
 }
 
@@ -44,4 +47,14 @@ export const OPTION_ROLE = [{
 },
 {
     value: 'admin', lable: 'Admin',
+}]
+
+export const OPTION_Quizzes = [{
+    value: 'Bài kiểm tra giữa môn', lable: 'Bài kiểm tra giữa môn',
+},
+{
+    value: 'Bài kiểm tra kết thúc môn', lable: 'Bài kiểm tra kết thúc môn',
+},
+{
+    value: 'Bài Tập Về Nhà', lable: 'Admin',
 }]

@@ -12,6 +12,7 @@ import QuestionAdminStoreReducer from "../PageAdmin/Question/store/QuestionAdmin
 import PlaylistStudentStoreReducer from "../Page/PlayListStudent/store/PlaylistStudent.store.reducer";
 import AccountManagerStore from "../PageAdmin/AccountManager/store/AccountManager.store";
 import TeacherManagerStoreReducer from "../PageAdmin/TeacherManager/store/TeacherManager.store.reducer";
+import LessonStoreReducer from "../PageAdmin/Lesson/store/Lesson.store.reducer";
 const sagamiddleware = createSagaMiddleware()
 const store = configureStore({
     reducer: {
@@ -25,7 +26,8 @@ const store = configureStore({
         quizzes: QuizzesStoreReducer.reducer,
         questionAdmin: QuestionAdminStoreReducer.reducer,
         student: AccountManagerStore.reducer,
-        teacher: TeacherManagerStoreReducer.reducer
+        teacher: TeacherManagerStoreReducer.reducer,
+        lessonTeacher: LessonStoreReducer.reducer
     },
     middleware(getDefaultMiddleware) {
         return getDefaultMiddleware({ thunk: false }).concat(sagamiddleware)

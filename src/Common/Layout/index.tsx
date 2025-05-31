@@ -46,6 +46,8 @@ import LessonStudent from '../../Page/LessonStudent/LessonStudent';
 import QuestionStudent from '../../Page/QuestionStudent/QuestionStudent';
 import AccountManager from '../../PageAdmin/AccountManager';
 import TeacherManager from '../../PageAdmin/TeacherManager';
+import VsCode from '../../PageAdmin/VSCode';
+
 const { Header, Sider, Content } = Layout;
 const LayoutCommon: React.FC = () => {
   const { setLogin, Logout, spin, setSpin } = React.useContext(AppContextAPI);
@@ -95,11 +97,24 @@ const LayoutCommon: React.FC = () => {
     });
     return () => document.removeEventListener('scroll', handleScroll);
   }, [navigate]);
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).id !== 'toggleButton') {
-      setTimeout(() => setActive(false), 1000);
+
+  const handleMouseDown = (e: MouseEvent) => {
+    console.log(!(e.target as HTMLElement).closest('#profile'));
+    if (!(e.target as HTMLElement).closest('#profile')) {
+      setActive(false);
     }
   };
+  React.useEffect(() => {
+    document.addEventListener('mousedown', handleMouseDown);
+
+    // Cleanup
+    return () => {
+      setTimeout(
+        () => document.removeEventListener('mousedown', handleMouseDown),
+        1000
+      );
+    };
+  }, [active]);
   // useEffect(() => {
   //   const newSocket = io('http://localhost:3001/', {
   //     // connect to socket Server
@@ -142,7 +157,7 @@ const LayoutCommon: React.FC = () => {
         />
       ),
       title: <h1>Login</h1>,
-      width: 800,
+      width: 1000,
       afterClose: () => {},
     });
   };
@@ -161,7 +176,7 @@ const LayoutCommon: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout onMouseDown={handleMouseDown} hasSider={true}>
+    <Layout hasSider={true}>
       <Sider className="sider" trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <div className="profile">
@@ -234,10 +249,10 @@ const LayoutCommon: React.FC = () => {
                 <span>Teachers</span>
               </div>
             </Link>
-            <Link to="/Contact">
+            <Link to="/Students">
               <div className="flex">
-                <MdContactMail size={25} />
-                <span>Contact us</span>
+                <FaGraduationCap size={25} />
+                <span>Students</span>
               </div>
             </Link>
           </nav>
@@ -289,15 +304,26 @@ const LayoutCommon: React.FC = () => {
               </div>
             )}
 
-            <div className={`profile ${active ? 'active' : ''} `}>
+            <div
+              style={{ zIndex: 999999 }}
+              className={`profile ${active ? 'active' : ''} `}
+              id="profile"
+            >
               <img src={pic1} className="image" alt="" />
-              <h3 className="name">shaikh anas</h3>
-              <p className="role">studen</p>
+              <h3 className="name">{user?.user_name || ''}</h3>
+              <p className="role">{user?.role || ''}</p>
               <a href="profile.html" className="btn">
                 view profile
               </a>
               <div className="flex-btn">
-                <Link onClick={() => Logout()} to="" className="option-btn">
+                <Link
+                  onClick={() => {
+                    setActive(false);
+                    Logout();
+                  }}
+                  to=""
+                  className="option-btn"
+                >
                   Logout
                 </Link>
                 {/* <Link to="" className="option-btn">
@@ -356,6 +382,7 @@ const LayoutCommon: React.FC = () => {
               <Route path="courses/:id" element={<PlayListCourse />}></Route>
               <Route path="courses/:id/:ls" element={<LessonAdmin />} />
               <Route path="courses/:id/Quizzes" element={<Question />} />
+
               <Route path="About" element={<About />} />
               <Route path="Teachers" element={<Teacher />} />
               <Route path="Contact" element={<Contact />} />

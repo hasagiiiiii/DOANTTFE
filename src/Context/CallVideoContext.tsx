@@ -49,7 +49,6 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
   const [peerInRooms, setPeerInRoom] = useState<PeerConnections>({});
   const room = getCookie('idCourse');
 
-  console.log(room);
   useEffect(() => {
     const newSocket = io('http://localhost:3001/', {
       // connect to socket Server
@@ -95,31 +94,39 @@ const CallVideoContext = ({ children }: CallVideoContextProps) => {
     peer: Peer
   ) => {
     if (userId && !peerInRooms[userId]) {
-      console.log('connect stream');
-      const call = peer.call(userId, stream);
-      const video = document.createElement('video');
-      call.on('stream', (userVideoStream: MediaStream) => {
-        if (!VideoRef.current[userId]) {
-          addVideoStream(video, userVideoStream, userId);
-          VideoRef.current[userId] = userVideoStream;
+      console.log('connect stream', stream);
+      let call: MediaConnection;
+      setTimeout(() => {
+        const video = document.createElement('video');
+        call = peer.call(userId, stream);
+        try {
+          call.on('stream', (userVideoStream: MediaStream) => {
+            console.log(userVideoStream);
+            if (!VideoRef.current[userId]) {
+              addVideoStream(video, userVideoStream, userId);
+              VideoRef.current[userId] = userVideoStream;
+            }
+          });
+        } catch (e) {
+          console.log(e);
         }
-      });
-      call.on('close', () => {
-        console.log('close');
-      });
+        call.on('close', () => {
+          console.log('close');
+        });
 
-      if (call.peerConnection) {
-        setPeerInRoom((prevPeers) => ({
-          ...prevPeers,
-          [userId]: {
-            call,
-            peerConnection: call.peerConnection,
-            senders: call.peerConnection.getSenders(),
-          },
-        }));
-      } else {
-        console.error(`PeerConnection not found for user ${userId}`);
-      }
+        if (call.peerConnection) {
+          setPeerInRoom((prevPeers) => ({
+            ...prevPeers,
+            [userId]: {
+              call,
+              peerConnection: call.peerConnection,
+              senders: call.peerConnection.getSenders(),
+            },
+          }));
+        } else {
+          console.error(`PeerConnection not found for user ${userId}`);
+        }
+      }, 200);
     }
   };
   const handleJoinRoom = (roomId: string): void => {

@@ -69,8 +69,13 @@ const TeacherManager = () => {
       key: 'action',
       render: (text: any, record: AcountModel) => (
         <div className="flex">
-          <Button style={{ marginRight: 10 }}>Update</Button>
-          <Button>Delete</Button>
+          <Button
+            onClick={() => handleDbClick(record)}
+            style={{ marginRight: 10 }}
+          >
+            Update
+          </Button>
+          <Button onClick={() => hanldeDelete(record)}>Delete</Button>
         </div>
       ),
     },
@@ -138,6 +143,14 @@ const TeacherManager = () => {
         />
       ),
     });
+  };
+  const hanldeDelete = async (record: AcountModel) => {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}deleteUser`, 'POST', {
+      id: record.id,
+    }).then((data) =>
+      dispatch(TeacherManagerStoreReducer.actions.deleteAccount(data.data))
+    );
+    hanldeSetLoading();
   };
   return (
     <div>

@@ -36,14 +36,18 @@ const PlayListStudent = () => {
   const playlists = useSelector(getPlayList);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}getCourseByID`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_COURSES}getCourseByID`, 'POST', {
       idCourse,
     }).then((data) => setCourse(data.data));
   }, []);
   React.useEffect(() => {
-    fetchData(`http://localhost:3001/api/course/getPlayListbyID`, 'POST', {
-      idCourse,
-    }).then((data) =>
+    fetchData(
+      `${process.env.REACT_APP_URL_API_LESSON}/getPlayListbyID`,
+      'POST',
+      {
+        idCourse,
+      }
+    ).then((data) =>
       dispatch(PlaylistStudentStoreReducer.actions.setPlayList(data.data))
     );
   }, []);
@@ -123,7 +127,9 @@ const PlayListStudent = () => {
         </div>
       </section>
       <section className="playlist-videos">
-        <h1 className="heading">Playlist videos</h1>
+        <h1 style={{ padding: '10px' }} className="heading">
+          Playlist videos
+        </h1>
         <div className="box-container">
           {playlists.map((playlist, index) => {
             return (

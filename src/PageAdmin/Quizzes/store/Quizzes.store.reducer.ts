@@ -17,6 +17,9 @@ export default createSlice({
         getAllQuizzes(state, action: PayloadAction<QuizzesItem[]>) {
             state.quizzes = action.payload
         },
+        insertQuizzes: (state, action: PayloadAction<QuizzesItem>) => {
+            state.quizzes.push(action.payload)
+        },
         updateQuizzes(state, action: PayloadAction<QuizzesItem>) {
             state.quizzes = state.quizzes.map((item) => item.id === action.payload.id ?
                 action.payload : item)

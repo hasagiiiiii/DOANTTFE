@@ -21,7 +21,7 @@ const LessonStudent = () => {
     .toISOString()
     .split('T')[0];
   React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}course/getLesson`, 'POST', {
+    fetchData(`${process.env.REACT_APP_URL_API_LESSON}getLesson`, 'POST', {
       idCourse,
       idLesson,
     }).then((data) => setLesson(data.data));

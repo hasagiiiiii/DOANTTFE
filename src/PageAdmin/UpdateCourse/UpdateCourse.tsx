@@ -87,7 +87,7 @@ const UpdateCourse: React.FC<{
       return;
     }
     axios
-      .post(`${process.env.REACT_APP_URL_API}updateCourse`, formData, {
+      .post(`${process.env.REACT_APP_URL_API_COURSES}updateCourse`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       })

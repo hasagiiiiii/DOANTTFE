@@ -64,7 +64,7 @@ const AddCourse: React.FC<{ onSucces: Function; dispatch: Dispatch<any> }> = ({
     // Thêm tất cả các file vào FormData
     try {
       const response = await axios.post(
-        'http://localhost:3001/api/course',
+        'http://localhost:3001/courses/course',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },

@@ -4,29 +4,40 @@ import video from '../../assets/vid-1.mp4';
 import { fetchData } from '../../Hook/useFetch';
 import getCookie from '../../Common/Function/Cookie';
 import { FaCalendar } from 'react-icons/fa';
-export interface LessonItem {
-  video_url: string;
-  title: string;
-  role: string;
-  user_name: string;
-  description: string;
-  created_at: string;
-  avatar: string;
-}
+import { Button } from 'antd';
+import ModalCommon from '../../Common/Component/Modal/Modal.component';
+import LessonStoreReducer, { LessonItem } from './store/Lesson.store.reducer';
+import UpdateLesson from '../UpdateLessson';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLesson } from './store/Lesson.store.selector';
+
 const LessonAdmin = () => {
   const idCourse = getCookie('idCourse');
   const idLesson = getCookie('idLesson');
-  const [lesson, setLesson] = React.useState<LessonItem>();
+
+  React.useEffect(() => {
+    fetchData(`${process.env.REACT_APP_URL_API_LESSON}getLesson`, 'POST', {
+      idCourse,
+      idLesson,
+    }).then((data) => dispatch(LessonStoreReducer.actions.insert(data.data)));
+  }, []);
+  let lesson = useSelector(getLesson);
   const date: string = new Date(lesson?.created_at || Date.now())
     .toISOString()
     .split('T')[0];
-  React.useEffect(() => {
-    fetchData(`${process.env.REACT_APP_URL_API}course/getLesson`, 'POST', {
-      idCourse,
-      idLesson,
-    }).then((data) => setLesson(data.data));
-  }, []);
-
+  const dispatch = useDispatch();
+  const update = () => {
+    // const updateLess = ModalCommon.Show({
+    //   title: <h1>Update Lesson</h1>,
+    //   content: (
+    //     <UpdateLesson
+    //       dispatch={dispatch}
+    //       values={lesson}
+    //       onSucces={() => updateLess.destroy()}
+    //     />
+    //   ),
+    // });
+  };
   return (
     <div>
       <section className="watch-video">
@@ -65,17 +76,22 @@ const LessonAdmin = () => {
             </div>
           </div>
           <form action="" method="post" className="flex">
-            <a href="playlist.html" className="inline-btn">
-              view playlist
-            </a>
+            <Button
+              style={{ padding: '5px 20px 48px' }}
+              onClick={() => update()}
+              className="inline-btn"
+            >
+              Update Lesson
+            </Button>
           </form>
           <p className="description">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
+            {/* Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque
             labore ratione, hic exercitationem mollitia obcaecati culpa dolor
             placeat provident porro. Lorem, ipsum dolor sit amet consectetur
             adipisicing elit. Aliquid iure autem non fugit sint. A, sequi rerum
             architecto dolor fugiat illo, iure velit nihil laboriosam cupiditate
-            voluptatum facere cumque nemo!
+            voluptatum facere cumque nemo! */}
+            {lesson.content}
           </p>
         </div>
       </section>

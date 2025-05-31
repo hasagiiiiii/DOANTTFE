@@ -15,7 +15,6 @@ export default createSlice({
             state.data = action.payload;
         },
         test(state, action) {
-            console.log('Updating state with:', action.payload);
             state.test = action.payload
         }
     }

@@ -10,6 +10,7 @@ import PagingCommon from '../../Common/Component/Paging/paging';
 import { AcountModel } from '../../Model/root.model';
 import ModalCommon from '../../Common/Component/Modal/Modal.component';
 import UpdateAccount from '../UpdateAccount';
+import AddStudent from '../AddStudent';
 
 const AccountManager = () => {
   const columns = [
@@ -69,8 +70,13 @@ const AccountManager = () => {
       key: 'action',
       render: (text: any, record: AcountModel) => (
         <div className="flex">
-          <Button style={{ marginRight: 10 }}>Update</Button>
-          <Button>Delete</Button>
+          <Button
+            onClick={() => handleDbClick(record)}
+            style={{ marginRight: 10 }}
+          >
+            Update
+          </Button>
+          <Button onClick={() => hanldeDelete(record)}>Delete</Button>
         </div>
       ),
     },
@@ -109,6 +115,14 @@ const AccountManager = () => {
     );
     hanldeSetLoading();
   };
+  const hanldeDelete = async (record: AcountModel) => {
+    fetchData(`${process.env.REACT_APP_URL_API_USER}deleteUser`, 'POST', {
+      id: record.id,
+    }).then((data) =>
+      dispatch(AccountManagerStore.actions.deleteAccount(data.data))
+    );
+    hanldeSetLoading();
+  };
   const handleChangePage = (pageNumber: number) => {
     console.log(pageNumber);
     setPaging((pre) => ({ ...pre, page: pageNumber }));
@@ -133,8 +147,17 @@ const AccountManager = () => {
       ),
     });
   };
+  const hanldeAddStudent = async () => {
+    const studentNew = ModalCommon.Show({
+      title: <h1>Add Student</h1>,
+      content: (
+        <AddStudent dispatch={dispatch} onSucces={() => studentNew.destroy()} />
+      ),
+    });
+  };
   return (
     <div>
+      <Button onClick={hanldeAddStudent}>Add Student</Button>
       <PagingCommon
         total={paging.total}
         pageSize={paging.limit}

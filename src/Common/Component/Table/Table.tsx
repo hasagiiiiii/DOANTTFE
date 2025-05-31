@@ -46,14 +46,13 @@ const TableCommon = <T extends Record<string, any>>({
   return (
     <Table
       loading={loading}
-      scroll={shouldScroll ? { y: height } : undefined}
+      scroll={{ x: 'max-content', y: shouldScroll ? height : undefined }}
       style={{ minHeight: height }}
       dataSource={dataSource}
       locale={{
         emptyText: emtyText,
       }}
       key={rowKey}
-      rowKey={(record) => record.id}
       className="custom-table-wrapper"
       pagination={pagination ? { position: ['topLeft'] } : false}
       bordered={border}

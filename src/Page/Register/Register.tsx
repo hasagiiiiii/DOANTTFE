@@ -60,7 +60,7 @@ const Register: React.FC<{ onSucces: Function }> = ({ onSucces }) => {
         <Input />
       </Form.Item>
       <Form.Item<RegisterModel> colon={false} label="password" name="password">
-        <Input />
+        <Input type="password" />
       </Form.Item>
       <Form.Item
         label="Confirm password"

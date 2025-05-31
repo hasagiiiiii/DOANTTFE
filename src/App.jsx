@@ -6,6 +6,7 @@ import CallVideoContext from './Context/CallVideoContext';
 import './App.css';
 import NotFound from './Page/NotFound/NotFound';
 import UpdateCourse from './PageAdmin/UpdateCourse/UpdateCourse';
+import VsCode from './PageAdmin/VSCode';
 const App = () => {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ const App = () => {
         <CallVideoContext>
           <Routes>
             <Route path="/*" element={<LayoutCommon />}></Route>
+            <Route path="/vsCode" element={<VsCode />} />
           </Routes>
         </CallVideoContext>
       </AppContext>
