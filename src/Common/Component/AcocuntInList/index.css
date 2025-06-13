@@ -50,3 +50,14 @@
     padding: 10px 15px;
     z-index: 999;
 }
+
+#menu-acc {
+    box-shadow: 1px 1px 4px rgb(172, 166, 166);
+    transition: ease-in-out 0.2s;
+    scale: 0;
+    transform-origin: top left;
+}
+
+#menu-acc.show {
+    scale: 1;
+}

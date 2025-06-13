@@ -115,8 +115,12 @@ const CoursesAdmin = () => {
   return (
     <div>
       <h1>Our Courses</h1>
-      <Button className="btn" onClick={() => hanldeRegister()}>
-        Register
+      <Button
+        className="btn"
+        style={{ width: '300px' }}
+        onClick={() => hanldeRegister()}
+      >
+        Add Course
       </Button>
       <TableCommon
         columns={columns}

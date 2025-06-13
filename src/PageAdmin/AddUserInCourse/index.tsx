@@ -8,7 +8,8 @@ const AddUserInCourse: React.FC<{
   dispatch: Dispatch;
   onSucces: Function;
   idCourse: number;
-}> = ({ dispatch, onSucces, idCourse }) => {
+  setListAccount: any;
+}> = ({ dispatch, onSucces, idCourse, setListAccount }) => {
   const [userName, setUsername] = React.useState('');
   const Submit = async () => {
     fetchData(
@@ -21,9 +22,13 @@ const AddUserInCourse: React.FC<{
     ).then((data) => {
       if (data.result === Result.RESULT_SUCCESS) {
         message.success('Thành Công', 10);
+        setListAccount(data.data);
       }
       if (data.result === Result.RESULT_FALURE) {
         message.error('Thất bại', 10);
+      }
+      if (data.result === Result.RESULT_ERROR) {
+        message.error('Không có tài khoản', 10);
       }
       onSucces();
     });

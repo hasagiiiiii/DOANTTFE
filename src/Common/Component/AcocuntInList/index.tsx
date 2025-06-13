@@ -1,11 +1,12 @@
-import { Avatar, Menu } from 'antd';
+import { Avatar, Button, Card, Menu } from 'antd';
 import React, { MouseEventHandler } from 'react';
 import './index.css';
 import { CiChat1 } from 'react-icons/ci';
-const AccountInList: React.FC<{ img: string; name: string }> = ({
-  img,
-  name,
-}) => {
+const AccountInList: React.FC<{
+  img: string;
+  name: string;
+  callback?: Function;
+}> = ({ img, name, callback }) => {
   const [show, setShow] = React.useState(false);
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -24,6 +25,11 @@ const AccountInList: React.FC<{ img: string; name: string }> = ({
       document.removeEventListener('mousedown', handleMouseDown);
     };
   }, [show]);
+  const hanldeClick = () => {
+    if (callback) {
+      callback();
+    }
+  };
   return (
     <div
       onContextMenu={handleContextMenu}
@@ -44,21 +50,22 @@ const AccountInList: React.FC<{ img: string; name: string }> = ({
       >
         <CiChat1 size={30} style={{ zIndex: 999 }} />
       </div>
-      <div
+      <Card
         style={{
           position: 'absolute',
           top: 0,
-          display: show ? 'block' : 'none',
+          right: 0,
+          zIndex: 99999,
         }}
+        className={show ? 'show' : ''}
         id="menu-acc"
       >
         <Menu>
-          <Menu.Item>Hello</Menu.Item>
-          <Menu.Item>Hello</Menu.Item>
-          <Menu.Item>Hello</Menu.Item>
-          <Menu.Item>Hello</Menu.Item>
+          <Button size="middle" onClick={hanldeClick} danger>
+            DELETE
+          </Button>
         </Menu>
-      </div>
+      </Card>
     </div>
   );
 };

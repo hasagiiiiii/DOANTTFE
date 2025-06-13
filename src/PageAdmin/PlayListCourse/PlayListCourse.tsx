@@ -29,6 +29,7 @@ import UpdateLesson from '../UpdateLessson';
 import { Result } from '../../Model/root.model';
 import AddUserInCourse from '../AddUserInCourse';
 import Score from '../Score/Score';
+import NotificationService from '../../Common/Component/Notification/Notification';
 
 export interface PlayListVideo {
   id: number;
@@ -42,6 +43,7 @@ export interface PlayListVideo {
 }
 
 interface ListAccount {
+  id: number;
   user_name: string;
   avatar: string;
 }
@@ -129,6 +131,7 @@ const PlayListCourse = () => {
         />
       ),
       width: 1500,
+      height: 300,
       afterClose: () => openQuiz.destroy(),
     });
   };
@@ -153,6 +156,7 @@ const PlayListCourse = () => {
           dispatch={dispatch}
           onSucces={() => addUser.destroy()}
           idCourse={idCourse}
+          setListAccount={setListAccount}
         />
       ),
       width: 400,
@@ -231,6 +235,33 @@ const PlayListCourse = () => {
       ),
     },
   ];
+  const hanldeUpdateListAccount = (id: number) => {
+    setListAccount(
+      listAccount.filter((item) => {
+        return item.id !== id;
+      })
+    );
+  };
+  const hanldeDeleteUser = async (user_id: number) => {
+    console.log(user_id);
+
+    fetchData(
+      `${process.env.REACT_APP_URL_API_ENROLLMENT}deleteUserJoin`,
+      'POST',
+      {
+        user_id: user_id,
+        course_id: idCourse,
+      }
+    ).then((data) => {
+      if (data.result == Result.RESULT_SUCCESS) {
+        hanldeUpdateListAccount(data.data.user_id);
+        NotificationService.success(<>Thành Công</>, 'Đã xóa thành công');
+      } else {
+        NotificationService.error(<>Thất bại</>, 'Thất bại');
+      }
+    });
+  };
+
   return (
     <div>
       <h1 className="heading">Playlist Details</h1>
@@ -314,6 +345,7 @@ const PlayListCourse = () => {
                   name={acc.user_name}
                   img={acc.avatar}
                   key={index}
+                  callback={() => hanldeDeleteUser(acc.id)}
                 />
               );
             })}

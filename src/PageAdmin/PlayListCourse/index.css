@@ -138,8 +138,8 @@
 }
 
 .playlist-videos .box-container {
-    /* display: flex; */
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); */
     flex: 0 0 20rem;
     gap: 1.5rem;
     justify-content: start;
@@ -150,6 +150,8 @@
     display: flex;
     gap: 10px;
     flex-direction: column;
+    height: 386px;
+    overflow-y: auto;
 }
 
 .addUser {

@@ -49,7 +49,7 @@ const AddCourse: React.FC<{ onSucces: Function; dispatch: Dispatch<any> }> = ({
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
-    formData.append('price', values.price);
+    // formData.append('price', values.price);
     formData.append('category', values.category);
     formData.append('teacher_id', user.id);
     console.log(file);
@@ -129,22 +129,22 @@ const AddCourse: React.FC<{ onSucces: Function; dispatch: Dispatch<any> }> = ({
       <Typography.Text>Description</Typography.Text>
       <Form.Item<AddCourseModel>
         name="description"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Please input your description!' }]}
       >
         <Input.TextArea />
       </Form.Item>
 
       <Typography.Text>Price</Typography.Text>
-      <Form.Item<AddCourseModel>
+      {/* <Form.Item<AddCourseModel>
         name="price"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
       <Typography.Text>Category</Typography.Text>
       <Form.Item<AddCourseModel>
         name="category"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Please Select a category!' }]}
       >
         <Select options={category} />
       </Form.Item>

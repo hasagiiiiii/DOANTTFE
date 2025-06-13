@@ -63,3 +63,9 @@ body {
 .ant-modal-confirm-btns button {
     margin: 20px;
 }
+
+.anticon-exclamation-circle {
+    padding: 33px 10px;
+    background-color: var(--main-color);
+    margin: 0 !important;
+}

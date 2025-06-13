@@ -6,11 +6,25 @@ interface ModalOption {
     onOk?: () => void;
     onCancel?: () => void;
     afterClose?: () => void;
-    width?: string | number | undefined
+    width?: string | number | undefined,
+    height?: string | number | undefined,
+
 }
 const ModalCommon = {
     Show(data: ModalOption) {
-        return Modal.info({ title: data.title, content: data.content, onOk: data.onOk, onCancel: data.onCancel, afterClose: data.afterClose, closable: true, width: data.width, icon: null, footer: null, getContainer: document.getElementById('root') as HTMLElement })
+        return Modal.info({
+            title: data.title,
+            content: data.content,
+            onOk: data.onOk,
+            onCancel: data.onCancel,
+            afterClose: data.afterClose,
+            closable: true,
+            width: data.width,
+            icon: null,
+            footer: null,
+            getContainer: document.getElementById('root') as HTMLElement,
+            height: data.height,
+        })
     },
 
     showInfo(data: ModalOption) {

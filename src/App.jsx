@@ -8,6 +8,23 @@ import NotFound from './Page/NotFound/NotFound';
 import UpdateCourse from './PageAdmin/UpdateCourse/UpdateCourse';
 import VsCode from './PageAdmin/VSCode';
 const App = () => {
+  // React.useEffect(() => {
+  //   let isDevtoolOpen = false;
+
+  //   setInterval(() => {
+  //     const widthThreshold = window.outerWidth - window.innerWidth > 100;
+  //     const heightThreshold = window.outerHeight - window.innerHeight > 100;
+  //     if (widthThreshold || heightThreshold) {
+  //       if (!isDevtoolOpen) {
+  //         isDevtoolOpen = true;
+  //         alert('Vui lòng không mở DevTools!');
+  //         window.location.href = '/'; // hoặc reload hay chuyển trang khác
+  //       }
+  //     } else {
+  //       isDevtoolOpen = false;
+  //     }
+  //   }, 1000);
+  // }, []);
   return (
     <BrowserRouter>
       <AppContext>

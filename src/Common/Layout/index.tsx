@@ -26,7 +26,7 @@ import { FaGraduationCap, FaQuestion, FaSun, FaUser } from 'react-icons/fa';
 import { FaPersonChalkboard } from 'react-icons/fa6';
 import { MdContactMail, MdMenu } from 'react-icons/md';
 import NotFound from '../../Page/NotFound/NotFound';
-import CoursesAdmin from '../../PageAdmin/CoursesAdmin/CoursesAdmin';
+
 import Course from '../Component/Course/Course';
 import HomeAdmin from '../../PageAdmin/HomeAdmin/HomeAdmin';
 import PlayListCourse from '../../PageAdmin/PlayListCourse/PlayListCourse';
@@ -44,10 +44,16 @@ import Courses from '../../Page/Courses/Courses';
 import PlayListStudent from '../../Page/PlayListStudent/PlayListStudent';
 import LessonStudent from '../../Page/LessonStudent/LessonStudent';
 import QuestionStudent from '../../Page/QuestionStudent/QuestionStudent';
-import AccountManager from '../../PageAdmin/AccountManager';
-import TeacherManager from '../../PageAdmin/TeacherManager';
 import VsCode from '../../PageAdmin/VSCode';
-
+const CoursesAdmin = React.lazy(
+  () => import('../../PageAdmin/CoursesAdmin/CoursesAdmin')
+);
+const AccountManager = React.lazy(
+  () => import('../../PageAdmin/AccountManager')
+);
+const TeacherManager = React.lazy(
+  () => import('../../PageAdmin/TeacherManager')
+);
 const { Header, Sider, Content } = Layout;
 const LayoutCommon: React.FC = () => {
   const { setLogin, Logout, spin, setSpin } = React.useContext(AppContextAPI);

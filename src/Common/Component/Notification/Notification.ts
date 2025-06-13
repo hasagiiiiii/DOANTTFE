@@ -1,8 +1,9 @@
 // src/utils/NotificationService.ts
 import { notification } from 'antd';
+import React from 'react';
 
 class NotificationService {
-    static success(message: string, description?: string) {
+    static success(message: string | React.ReactNode, description?: string) {
         notification.success({
             message,
             description,
@@ -11,7 +12,7 @@ class NotificationService {
         });
     }
 
-    static error(message: string, description?: string) {
+    static error(message: string | React.ReactNode, description?: string) {
         notification.error({
             message,
             description,
@@ -20,7 +21,7 @@ class NotificationService {
         });
     }
 
-    static warning(message: string, description?: string) {
+    static warning(message: string | React.ReactNode, description?: string) {
         notification.warning({
             message,
             description,
@@ -29,7 +30,7 @@ class NotificationService {
         });
     }
 
-    static info(message: string, description?: string) {
+    static info(message: string | React.ReactNode, description?: string) {
         notification.info({
             message,
             description,
